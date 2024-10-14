@@ -3,6 +3,8 @@ import { Movies } from '../components/Movies';
 import { Search } from '../components/Search';
 import { Preloader } from '../components/Preloader';
 
+const API_KEY = import.meta.env.VITE_API_KEY;
+
 class Main extends React.Component {
   state = {
     movies: [],
@@ -12,7 +14,7 @@ class Main extends React.Component {
   componentDidMount() {
     this.setState({ loading: true });
     try {
-      fetch(`http://www.omdbapi.com/?apikey=63a73863&s=Saw`)
+      fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=Saw`)
         .then((res) => res.json())
         .then((data) => {
           this.setState({ movies: data.Search, loading: false });
@@ -27,7 +29,7 @@ class Main extends React.Component {
     this.setState({ loading: true });
     try {
       fetch(
-        `http://www.omdbapi.com/?apikey=63a73863&s=${searchStr}${
+        `http://www.omdbapi.com/?apikey=${API_KEY}&s=${searchStr}${
           type !== 'all' ? `&type=${type}` : ''
         }`
       )
