@@ -5,14 +5,18 @@ import { Preloader } from '../components/Preloader';
 
 class Main extends React.Component {
   state = {
-    movies: []
+    movies: [],
+    loading: false
   };
 
   componentDidMount() {
+    this.setState({ loading: true });
     try {
       fetch(`http://www.omdbapi.com/?apikey=63a73863&s=Saw`)
         .then((res) => res.json())
-        .then((data) => this.setState({ movies: data.Search }));
+        .then((data) => {
+          this.setState({ movies: data.Search, loading: false });
+        });
     } catch (error) {
       console.error('Fetch', error);
     }
@@ -20,6 +24,7 @@ class Main extends React.Component {
 
   searchMovies = (searchStr, type = 'all') => {
     console.log('searchMovies');
+    this.setState({ loading: true });
     try {
       fetch(
         `http://www.omdbapi.com/?apikey=63a73863&s=${searchStr}${
@@ -29,7 +34,7 @@ class Main extends React.Component {
         .then((res) => res.json())
         .then((data) => {
           console.log('data ', data);
-          this.setState({ movies: data.Search });
+          this.setState({ movies: data.Search, loading: false });
         });
     } catch (error) {
       console.error('Fetch', error);
@@ -37,12 +42,12 @@ class Main extends React.Component {
   };
 
   render() {
-    const { movies } = this.state;
+    const { movies, loading } = this.state;
 
     return (
       <main className=" mx-auto mb-auto container content">
         <Search searchMovies={this.searchMovies} />
-        {movies.length ? <Movies movies={movies} /> : <Preloader />}
+        {!loading ? <Movies movies={movies} /> : <Preloader />}
       </main>
     );
   }
