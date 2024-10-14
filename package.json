@@ -1,7 +1,7 @@
 {
   "name": "react-movies-mich",
   "private": true,
-  "homepage": "https://enigmasn.github.com/react-movies-mich",
+  "homepage": "https://enigmasn.github.io/react-movies-mich",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -12,7 +12,7 @@
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "react": "^18.3.1",
