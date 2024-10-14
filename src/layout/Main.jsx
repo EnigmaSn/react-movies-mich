@@ -9,19 +9,31 @@ class Main extends React.Component {
   };
 
   componentDidMount() {
-    fetch(`http://www.omdbapi.com/?apikey=63a73863&s=Saw`)
-      .then((res) => res.json())
-      .then((data) => this.setState({ movies: data.Search }));
+    try {
+      fetch(`http://www.omdbapi.com/?apikey=63a73863&s=Saw`)
+        .then((res) => res.json())
+        .then((data) => this.setState({ movies: data.Search }));
+    } catch (error) {
+      console.error('Fetch', error);
+    }
   }
 
-  searchMovies = (searchStr) => {
+  searchMovies = (searchStr, type = 'all') => {
     console.log('searchMovies');
-    fetch(`http://www.omdbapi.com/?apikey=63a73863&s=${searchStr}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('data ', data);
-        this.setState({ movies: data.Search });
-      });
+    try {
+      fetch(
+        `http://www.omdbapi.com/?apikey=63a73863&s=${searchStr}${
+          type !== 'all' ? `&type=${type}` : ''
+        }`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log('data ', data);
+          this.setState({ movies: data.Search });
+        });
+    } catch (error) {
+      console.error('Fetch', error);
+    }
   };
 
   render() {
